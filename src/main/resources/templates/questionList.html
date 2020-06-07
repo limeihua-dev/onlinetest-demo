@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>后台管理问题列表</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="layui/css/layui.css"  media="all">
+
+</head>
+
+<body>
+
+
+
+<table class="layui-hide" id="test" lay-filter="test"></table>
+
+<!-- div被script包裹起来，是为了和下面的点击事件绑定起来 -->
+<script type="text/html" id="toolbarDemo">
+	<div class="layui-btn-container">
+		<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+		<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+		<button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+		<button class="layui-btn layui-btn-sm"><li><a href="/qEdit">新增</a></li></button>
+	</div>
+</script>
+
+<script type="text/html" id="barDemo">
+	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+
+<script src="layui/layui.js" charset="utf-8"></script>
+<script>
+	// 开始加载上面的table
+	layui.use('table', function(){
+		var table = layui.table;
+
+		//温馨提示：默认由前端自动合计当前行数据。从 layui 2.5.6 开始： 若接口直接返回了合计行数据，则优先读取接口合计行数据。
+		//详见：https://www.layui.com/doc/modules/table.html#totalRow
+		//render相当于在加载
+		table.render({
+			elem: '#test'//绑定表格
+			,url:'/list'//表格中所放数据
+			,toolbar: '#toolbarDemo'//所绑定按钮的id
+			,title: '用户数据表'//导出表格时表格的名字
+			,totalRow: true
+			,cols: [
+					[
+				{type: 'checkbox', fixed: 'left'}
+				,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
+				,{field:'title', title:'题目', width:120, edit: 'text'}
+				// ,{field:'option_a', title:'邮箱', width:150, edit: 'text', templet: function(res){
+				// 		return '<em>'+ res.email +'</em>'//templet是为了给表中数据加样式，回调《em》斜体标签
+				// 	}}
+				,{field:'optionA', title:'选项A', width:100, edit: 'text'}
+				,{field:'optionB', title:'选项B', width:100, edit: 'text'}
+				,{field:'optionD', title:'选项D', width:100, edit: 'text'}
+				,{field:'optionC', title:'选项C', width:100, edit: 'text'}
+				,{field:'answer', title:'正确答案', edit: 'text'}
+				,{field:'score', title:'分值', width:100,totalRow: true, edit: 'text'}
+				,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+			]
+			]
+			,page: true
+		});
+
+		//工具栏事件
+		table.on('toolbar(test)', function(obj){
+			var checkStatus = table.checkStatus(obj.config.id);
+			//与上面模块的三个按钮绑定
+			//点击obj.event,就执行
+			switch(obj.event){
+				case 'getCheckData':
+					var data = checkStatus.data;
+					layer.alert(JSON.stringify(data));
+					break;
+				case 'getCheckLength':
+					var data = checkStatus.data;
+					layer.msg('选中了：'+ data.length + ' 个');
+					break;
+				case 'isAll':
+					layer.msg(checkStatus.isAll ? '全选': '未全选')
+					break;
+			};
+		});
+		
+		  //监听工具条
+		  table.on('tool(test)', function(obj){
+		    var data = obj.data;
+		    if(obj.event === 'detail'){
+		      layer.msg('ID：'+ data.id + ' 的查看操作');
+		    } else if(obj.event === 'del'){
+		      layer.confirm('真的删除行么', function(index){
+		        obj.del();
+		        layer.close(index);
+		      });
+		    } else if(obj.event === 'edit'){
+		      layer.alert('编辑行：<br>'+ JSON.stringify(data))
+		    }
+		  });
+	});
+</script>
+
+</body>
+</html>

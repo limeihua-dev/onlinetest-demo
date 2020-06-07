@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>管理员添加问题</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+</head>
+<body>
+<div th:insert="~{navigation :: nav}"></div>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增问题</h2>
+            <hr>
+
+            <form action="/add" method="post">
+                <input type="hidden" name="id" th:value="${id}">
+                <div class="form-group">
+                    <label for="title">题目:</label>
+                    <input type="text" class="form-control" th:value="${title}" id="title" name="title"
+                           placeholder="试题题目..."
+                           autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="optionA">选项A:</label>
+                    <input type="text" class="form-control" th:value="${optionA}" id="optionA" name="optionA"
+                           placeholder="选项A..."
+                           autocomplete="off">
+                </div>
+
+                <div class="form-group" id="question-editor">
+                    <label for="optionB">选项B:</label>
+                    <input type="text" class="form-control" th:value="${optionB}" id="optionB" name="optionB"
+                           placeholder="optionB..."
+                           autocomplete="off">
+                </div>
+                <div class="form-group" id="question-editor">
+                    <label for="optionC">选项C:</label>
+                    <input type="text" class="form-control" th:value="${optionC}" id="optionC" name="optionC"
+                           placeholder="optionB..."
+                           autocomplete="off">
+                </div>
+                <div class="form-group" id="question-editor">
+                    <label for="optionD">选项D:</label>
+                    <input type="text" class="form-control" th:value="${optionD}" id="optionD" name="optionD"
+                           placeholder="optionD..."
+                           autocomplete="off">
+                </div>
+                <div class="form-group" id="question-editor">
+                    <label for="answer">正确答案:</label>
+                    <input type="text" class="form-control" th:value="${answer}" id="answer" name="answer"
+                           placeholder="正确答案..."
+                           autocomplete="off">
+                </div>
+                <div class="form-group" id="question-editor">
+                    <label for="score">分值:</label>
+                    <input type="text" class="form-control" th:value="${score}" id="score" name="score"
+                           placeholder="分值..."
+                           autocomplete="off">
+                </div>
+
+
+                <div class="container-fluid main ">
+                    <div class="row">
+                        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                            <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                 th:text="${error}"
+                                 th:if="${error != null}">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+
+                                <button type="submit" class="btn btn-success btn-publish">
+                                    确认
+                                </button>
+
+                               <button type="button" class="btn btn-success btn-publish"><li><a href="/questionList">返回问题列表</a></li></button>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
