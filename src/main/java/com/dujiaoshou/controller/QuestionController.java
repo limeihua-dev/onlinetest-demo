@@ -23,7 +23,6 @@ public class QuestionController {
         return dataVO ;
     }
 
-
     @GetMapping("/questionList")
     public String redirect(){
         return "questionList";

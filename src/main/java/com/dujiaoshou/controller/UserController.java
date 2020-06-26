@@ -3,8 +3,8 @@ package com.dujiaoshou.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dujiaoshou.mapper.UserMapper;
 import com.dujiaoshou.model.User;
+import com.dujiaoshou.service.QuestionService;
 import com.dujiaoshou.service.UserService;
-import com.dujiaoshou.vo.DataVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,40 +23,25 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
-    //用户页面列表
-    @RequestMapping("/uList")
-    @ResponseBody
-    public DataVO userList(Integer page, Integer limit) {
-
-        DataVO<User> dataVO = userService.findData(page, limit);
-        return dataVO ;
-    }
-
-
-    @GetMapping("/userList")
-    public String redirect(){
-        return "userList";
-    }
+    @Autowired
+    private QuestionService questionService;
 
 
 
 
 
-    @GetMapping("/login")
-    public String login(HttpServletRequest request){
-        if (request.getSession().getAttribute("user") != null) {
-            return "redirect:/";
-        }
+    @GetMapping("/user")
+    public String loginUser(){
         return "login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/uLogin")
     public String doLogin(@RequestParam(name = "username") String username,
                           @RequestParam(name = "password") String password,
                           Model model,
                           HttpServletRequest request){
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.select(username);
+        wrapper.eq("username",username);
         User dbUser = userMapper.selectOne(wrapper);
         if (dbUser == null) {
             model.addAttribute("msg", "用户不存在");
@@ -67,7 +52,7 @@ public class UserController {
             return "login";
         }
         request.getSession().setAttribute("user", username);
-        return "redirect:/";
+        return "redirect:/test";
     }
 
 
@@ -75,9 +60,9 @@ public class UserController {
     //用户注册
     @GetMapping("/register")
     public String register(HttpServletRequest request) {
-        if (request.getSession().getAttribute("user") != null) {
-            return "redirect:/";
-        }
+//        if (request.getSession().getAttribute("user") != null) {
+//            return "redirect:/";
+//        }
         return "register";
     }
 
@@ -104,8 +89,16 @@ public class UserController {
         newUser.setPassword(password);
         newUser.setCreateTime(System.currentTimeMillis());
         userMapper.insert(newUser);
-        return "redirect:/";
+        return "/login";
     }
+
+
+    //提交成功页面
+    @GetMapping("/success")
+    public String success(){
+        return "success";
+    }
+
 }
 
 

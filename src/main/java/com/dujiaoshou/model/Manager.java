@@ -2,10 +2,9 @@ package com.dujiaoshou.model;
 
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
-public class User {
+public class Manager {
+
 
     private String id;
 
@@ -17,6 +16,7 @@ public class User {
 
 
     private Long createTime;
+
 
 
 }

@@ -7,9 +7,12 @@ import com.dujiaoshou.mapper.UserMapper;
 import com.dujiaoshou.model.Result;
 import com.dujiaoshou.model.User;
 import com.dujiaoshou.vo.DataVO;
+import com.dujiaoshou.vo.UserGradeBarVO;
+import com.dujiaoshou.vo.UserGradeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -85,5 +88,21 @@ public class UserService {
             e.printStackTrace();
         }
         return result;
+    }
+
+
+    public UserGradeVO  getGradeVO(){
+        List<UserGradeBarVO> list = userMapper.findAllGradeBarVO();
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<Integer> grades = new ArrayList<>();
+        for (UserGradeBarVO userGradeBarVO : list) {
+            names.add(userGradeBarVO.getUsername());
+            grades.add(userGradeBarVO.getGrade());
+        }
+        UserGradeVO userGradeVO = new UserGradeVO();
+        userGradeVO.setGrades(grades);
+        userGradeVO.setUsernames(names);
+        return userGradeVO;
+
     }
 }

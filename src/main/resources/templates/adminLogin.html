@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>用户登录</title>
+    <title>管理员登录</title>
     <link rel="stylesheet" href="layui/css/layui.css" media="all">
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="/register.css">
@@ -21,7 +21,7 @@
 <body>
 <div th:insert="~{navigation :: nav}"></div>
 <div class="media-body">
-    <form action="/uLogin" method="post">
+    <form action="/aLogin" method="post">
         <div class="form-group">
             <label for="username">用&thinsp;户&thinsp;名&thinsp;&thinsp;</label>
             <input type="text" class="form-control" id="username" name="username" aria-describedby="username"
@@ -33,10 +33,9 @@
         </div>
 
         <button type="submit" class="btn btn-primary btn-block" >登录</button>
-        <button type="button"  class="btn btn-primary btn-block" onclick="window.location.href ='/register'">注册</button>
         <div class="alert alert-danger" role="alert" th:if="${msg}" th:text="${msg}"></div>
     </form>
 </div>
-</body>
 
+</body>
 </html>

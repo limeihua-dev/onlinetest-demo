@@ -6,6 +6,8 @@ import com.dujiaoshou.model.Question;
 import com.dujiaoshou.model.User;
 import com.dujiaoshou.service.QuestionService;
 import com.dujiaoshou.service.UserService;
+import com.dujiaoshou.vo.UserGradeBarVO;
+import com.dujiaoshou.vo.UserGradeVO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +34,14 @@ class DemoApplicationTests {
     @Autowired
     private QuestionService questionService;
 
+
+    @Test
+    void test(){
+        UserGradeVO gradeVO = userService.getGradeVO();
+        int i = 0;
+    }
+
+
     @Test
     void contextLoads() {
 //        QuestionExample questionExample = new QuestionExample();
@@ -45,49 +55,56 @@ class DemoApplicationTests {
         System.out.println(user);
     }
 
-    @Test
-    void finData() {
+//    @Test
+//    void test(){
+//        List<UserGradeBarVO> allGradeBarVO = userMapper.findAllGradeBarVO();
+//        System.out.println(allGradeBarVO);
+//    }
+
+//    @Test
+//    void finData() {
 //        DataVO dataVO = questionService.findData();
-        int i = 0;
-    }
+//        int i = 0;
+//    }
 
-    @Test
-    void randonId() {
-        Random random = new Random();
-        for (int i = 0; i < 100; i++) {
-            System.out.println(random.nextInt(100));//能产生一个大于或等于0，小于但不等于10的随机整数，也就是个位数
-        }
+//
+//    @Test
+//    void randonId() {
+//        Random random = new Random();
+//        for (int i = 0; i < 100; i++) {
+//            System.out.println(random.nextInt(100));//能产生一个大于或等于0，小于但不等于10的随机整数，也就是个位数
+//        }
+//
+//    }
 
-    }
-
-    @Test
-    void random() {
-        System.out.print("输入产生的随机数范围，1到N，N=");
-        int n = 10;
-        int randArr[] = new int[n];
-        int i = 0;
-        ArrayList<Question> questions = new ArrayList<>();
-        while (i < n) {
-            int rand = (new Random().nextInt(n) + 1);
-            boolean isRandExist = false;
-            for (int j = 0; j < randArr.length; j++) {
-                if (randArr[j] == rand) {
-                    isRandExist = true;
-                    break;
-                }
-            }
-            if (isRandExist == false) {
-                randArr[i] = rand;
-                i++;
-                Question question = questionMapper.selectById(rand);
-                questions.add(question);
-            }
-        }
-
-        System.out.println("questions============"+questions);
+//    @Test
+//    void random() {
+//        System.out.print("输入产生的随机数范围，1到N，N=");
+//        int n = 10;
+//        int randArr[] = new int[n];
+//        int i = 0;
+//        ArrayList<Question> questions = new ArrayList<>();
+//        while (i < n) {
+//            int rand = (new Random().nextInt(n) + 1);
+//            boolean isRandExist = false;
+//            for (int j = 0; j < randArr.length; j++) {
+//                if (randArr[j] == rand) {
+//                    isRandExist = true;
+//                    break;
+//                }
+//            }
+//            if (isRandExist == false) {
+//                randArr[i] = rand;
+//                i++;
+//                Question question = questionMapper.selectById(rand);
+//                questions.add(question);
+//            }
+//        }
+//
+//        System.out.println("questions============"+questions);
 
 
-    }
+//    }
 }
 
 
